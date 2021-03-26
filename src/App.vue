@@ -21,9 +21,11 @@
         <div>
           <button
               class="btn"
+              @click="prev"
           >Назад</button>
           <button
               class="btn primary"
+              @click="nextOfFinish"
           >Вперед</button>
         </div>
       </div>
@@ -48,9 +50,17 @@ export default {
     }
   },
   methods: {
+    prev() {
+      this.activeIndex !== 0 ? this.activeIndex-- : null
+    },
     setActive(idx) {
       this.activeIndex = idx
+    },
+    nextOfFinish() {
+      this.activeIndex !== this.steps.length - 1 ? this.activeIndex++ : null
     }
+  },
+  computed: {
   }
 }
 </script>
