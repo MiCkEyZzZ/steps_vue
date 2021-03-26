@@ -63,7 +63,7 @@ export default {
   },
   computed: {
     disabled() {
-      return this.activeIndex === 0 ? true : false
+      return this.activeIndex === 0
     }
   }
 }
