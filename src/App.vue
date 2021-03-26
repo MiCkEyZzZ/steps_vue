@@ -22,6 +22,7 @@
           <button
               class="btn"
               @click="prev"
+              :disabled="disabled"
           >Назад</button>
           <button
               class="btn primary"
@@ -61,6 +62,9 @@ export default {
     }
   },
   computed: {
+    disabled() {
+      return this.activeIndex === 0
+    }
   }
 }
 </script>
