@@ -5,12 +5,12 @@
 
       <div class="steps">
         <div class="steps-content">
-          тест
+          {{ currentStep.text }}
         </div>
         <ul class="steps-list">
           <li
               class="steps-item"
-              :class="{active: activeIndex === idx, done: activeIndex > idx}"
+              :class="{ active: activeIndex === idx, done: activeIndex > idx }"
               :key="step"
               v-for="(step, idx) in steps"
           >
@@ -18,7 +18,7 @@
                 @click="setActive(idx)"
             >{{ idx + 1 }}</span> {{ step.title }}</li>
         </ul>
-        <div>
+        <div v-if="isActive">
           <button
               class="btn"
               @click="prev"
@@ -27,7 +27,13 @@
           <button
               class="btn primary"
               @click="nextOfFinish"
-          >Вперед</button>
+          >{{ lastStep ? 'Вперед' : 'Завершить' }}</button>
+        </div>
+        <div v-else>
+          <button
+              class="btn primary"
+              @click="reset"
+          >Начать заного</button>
         </div>
       </div>
     </div>
@@ -54,16 +60,26 @@ export default {
     prev() {
       this.activeIndex !== 0 ? this.activeIndex-- : null
     },
+    reset() {
+      this.activeIndex = 0
+      this.isActive = true
+    },
     setActive(idx) {
       this.activeIndex = idx
     },
     nextOfFinish() {
-      this.activeIndex !== this.steps.length - 1 ? this.activeIndex++ : null
+      this.activeIndex !== this.steps.length - 1 ? this.activeIndex++ : this.isActive = false
     }
   },
   computed: {
+    currentStep() {
+      return this.steps[this.activeIndex]
+    },
     disabled() {
       return this.activeIndex === 0
+    },
+    lastStep() {
+      return this.activeIndex < this.steps.length - 1
     }
   }
 }
